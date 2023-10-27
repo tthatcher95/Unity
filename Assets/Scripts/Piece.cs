@@ -25,7 +25,7 @@ public class Piece : MonoBehaviour
         //If your mouse hovers over the GameObject with the script attached, output this message
         //If your mouse hovers over the GameObject with the script attached, output this message
         this.GetComponent<Image>().color = Color.magenta;
-        
+
         // if(this.GetComponent<Image>().color == Color.white) {
         //     this.GetComponent<Image>().color = Color.magenta;
         // }
@@ -41,24 +41,24 @@ public class Piece : MonoBehaviour
             // }
     }
 
-    void OnEnable() {
-            EventManager.OnDoubleClicked += rotatePiece;
-    }
+    // void OnEnable() {
+    //         EventManager.OnDoubleClicked += rotatePiece;
+    // }
+    //
+    // void OnDisable() {
+    //         EventManager.OnDoubleClicked -= rotatePiece;
+    // }
 
-    void OnDisable() {
-            EventManager.OnDoubleClicked -= rotatePiece;
-    }
-
-    public void rotatePiece() {
-        this.transform.Rotate(0.5 * Time.deltaTime, 0, 0 ( ));
-    }
+    // public void rotatePiece() {
+    //     this.transform.Rotate(0.5 * Time.deltaTime, 0, 0 ( ));
+    // }
     // Start is called before the first frame update
     void Start()
 
     {
         // Debug.Log(this.name);
         rb = this.gameObject.GetComponent<Rigidbody2D>();
-        ChangeSuitRandom();   
+        ChangeSuitRandom();
     }
 
     public void freezePiece() {
@@ -105,7 +105,7 @@ public class Piece : MonoBehaviour
         Sprite X = Resources.Load<Sprite>("Images/Letter_Tiles_PNG/Water_Upper_X_Tile");
         Sprite Y = Resources.Load<Sprite>("Images/Letter_Tiles_PNG/Water_Upper_Y_Tile");
         Sprite Z = Resources.Load<Sprite>("Images/Letter_Tiles_PNG/Water_Upper_Z_Tile");
-        
+
         Image image = this.GetComponent<Image>();
 
         switch (suit)

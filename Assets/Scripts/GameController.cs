@@ -23,8 +23,8 @@ public class GameController : MonoBehaviour
 
     float iResX = 0;
     float iResY = 0;
-    int rows = 7; 
-    int cols = 7;
+    int rows = 5;
+    int cols = 5;
     int nodeHeight = 0;
     int nodeWidth = 0;
     int kWords;
@@ -41,14 +41,14 @@ public class GameController : MonoBehaviour
                 eachLine.RemoveAt(i);
             }
         }
-        
+
         kWords = eachLine.Count;
 
         _rectTransform = GetComponent<RectTransform>();
         playerScore = 0;
 
 
-        // ScoreText = GetComponent<ScoreText>();        
+        // ScoreText = GetComponent<ScoreText>();
         // updateScoreText();
         CreateNodes();
     }
@@ -59,9 +59,9 @@ public class GameController : MonoBehaviour
         {
             // grid.Add( new List<GameObject>());
 
-            for (int j = 0; j < cols; j++)
+            for (int j = 1; j < cols; j++)
             {
-                
+
                 GameObject node = Instantiate(NodePrefab);
                 node.transform.SetParent(this.transform);
 
@@ -73,7 +73,7 @@ public class GameController : MonoBehaviour
                 node.transform.localScale = Vector3.one;
                 node.GetComponent<NodeData>().setGridValues(i, j);
                 grid[i, j] = node;
-                
+
                 if(iResX == 0 && iResY == 0) {
                     iResX = this.transform.GetComponent<RectTransform>().rect.width / nodeWidth;
                     iResY = this.transform.GetComponent<RectTransform>().rect.height / nodeHeight;
@@ -96,7 +96,7 @@ public class GameController : MonoBehaviour
             // Debug.Log(selectedNode.GetComponent<NodeData>().getGridPos());
 
     }
-    
+
     public void Unselect() {
             selectedNode.transform.GetChild(0).gameObject.GetComponent<Image>().color = Color.white;
             // selectedNode.transform.GetChild(0).gameObject.GetComponent<Piece>().deselectPiece();
@@ -104,12 +104,12 @@ public class GameController : MonoBehaviour
     }
 
     public void Swap(GameObject gameObject1, GameObject gameObject2) {
-        
+
         Vector3 tempPosition = gameObject1.transform.position;
 
         // Swap Obj1 Position
         gameObject1.transform.position = gameObject2.transform.position;
-        // Swap Obj Position 
+        // Swap Obj Position
         gameObject2.transform.position = tempPosition;
 
         int gobj1X = (int)gameObject1.GetComponent<NodeData>().getGridPos()[0];
@@ -135,7 +135,7 @@ public class GameController : MonoBehaviour
     public void check_vertical() {
         for(int row=0; row < rows; row++) {
             for(int col=0; col < (cols - 3); col++) {
-                var wordToCheck = grid[row, col].GetComponent<NodeData>().getLetterValue() + grid[row, col+1].GetComponent<NodeData>().getLetterValue() + grid[row, col+2].GetComponent<NodeData>().getLetterValue(); 
+                var wordToCheck = grid[row, col].GetComponent<NodeData>().getLetterValue() + grid[row, col+1].GetComponent<NodeData>().getLetterValue() + grid[row, col+2].GetComponent<NodeData>().getLetterValue();
                 if( eachLine.Contains(wordToCheck)) {
                         matches.Add(grid[row, col].GetComponent<NodeData>().getGridPos());
                         matches.Add(grid[row, col+1].GetComponent<NodeData>().getGridPos());
@@ -149,7 +149,7 @@ public class GameController : MonoBehaviour
     public void check_horizontal() {
         for(int row=0; row < (rows - 3); row++) {
             for(int col=0; col < cols; col++) {
-                var wordToCheck = grid[row, col].GetComponent<NodeData>().getLetterValue() + grid[row+1, col].GetComponent<NodeData>().getLetterValue() + grid[row+2, col].GetComponent<NodeData>().getLetterValue(); 
+                var wordToCheck = grid[row, col].GetComponent<NodeData>().getLetterValue() + grid[row+1, col].GetComponent<NodeData>().getLetterValue() + grid[row+2, col].GetComponent<NodeData>().getLetterValue();
                 if( eachLine.Contains(wordToCheck)) {
                         matches.Add(grid[row, col].GetComponent<NodeData>().getGridPos());
                         matches.Add(grid[row + 1, col].GetComponent<NodeData>().getGridPos());
@@ -162,15 +162,15 @@ public class GameController : MonoBehaviour
 
     public void addNodes() {
         foreach (Vector2 m in matches)
-        {   
+        {
             // Debug.Log("ADD-COORDS: " + m);
 
             GameObject node = Instantiate(NodePrefab);
             node.transform.SetParent(this.transform);
-            
+
             nodeHeight = (int)node.transform.GetComponent<RectTransform>().rect.height;
             nodeWidth = (int)node.transform.GetComponent<RectTransform>().rect.width;
-            
+
             Vector2 pos = new Vector2((int)m[0] * nodeWidth, -(int)m[1] * nodeHeight);
             node.GetComponent<RectTransform>().anchoredPosition = pos;
             node.transform.localScale = Vector3.one;
@@ -185,7 +185,7 @@ public class GameController : MonoBehaviour
     }
 
     public void deleteMatches() {
-        
+
         foreach (Vector2 m in matches)
 
             {
@@ -195,7 +195,7 @@ public class GameController : MonoBehaviour
                 playerScore++;
 
             }
-        
+
         addNodes();
         // matches = new HashSet<Vector2>();
     }
@@ -208,7 +208,7 @@ public class GameController : MonoBehaviour
     void Update()
          {
             if (Input.GetMouseButtonDown(0))
-                {   
+                {
                     // Get mouse position
                     Vector3 mousePos = Input.mousePosition;
 
@@ -216,7 +216,7 @@ public class GameController : MonoBehaviour
                     // Debug.Log("POSITION-Y " + ((1 - (mousePos.y / Screen.height))) * iResY);
 
 
-                    Vector3 worldPosition = new Vector3( Mathf.Floor((float)((mousePos.x / Screen.width * iResX))), 
+                    Vector3 worldPosition = new Vector3( Mathf.Floor((float)((mousePos.x / Screen.width * iResX))),
                                                          Mathf.Floor((float)((1 - (mousePos.y / Screen.height))) * iResY), 0);
 
                     int mouseX = (int)(worldPosition.x);
@@ -229,7 +229,7 @@ public class GameController : MonoBehaviour
                         Swap(selectedNode, grid[mouseX, mouseY].gameObject);
 
                         Unselect();
-                        
+
                         check_horizontal();
 
                         check_vertical();
@@ -263,8 +263,7 @@ public class GameController : MonoBehaviour
 
 
                     }
-                    
+
                 }
         }
 }
-
