@@ -9,12 +9,62 @@ public class Piece : MonoBehaviour
     public enum Suits {blank, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z};
     // public enum Suits {none, green, yellow, red}
     public Suits Suit = Suits.blank;
-    
+    public Rigidbody2D rb;
+    // public bool selectedNode = false;
+
+    // public void selectPiece() {
+    //     this.selectedNode = true;
+    // }
+
+    // public void deselectPiece() {
+    //     this.selectedNode = false;
+    // }
+
+    void OnMouseOver()
+    {
+        //If your mouse hovers over the GameObject with the script attached, output this message
+        //If your mouse hovers over the GameObject with the script attached, output this message
+        this.GetComponent<Image>().color = Color.magenta;
+        
+        // if(this.GetComponent<Image>().color == Color.white) {
+        //     this.GetComponent<Image>().color = Color.magenta;
+        // }
+    }
+
+    void OnMouseExit()
+    {
+            // Reset the color of the GameObject back to normal
+            this.GetComponent<Image>().color = Color.white;
+
+            // if(this.GetComponent<Image>().color != Color.green) {
+            //     this.GetComponent<Image>().color = Color.white;
+            // }
+    }
+
+    void OnEnable() {
+            EventManager.OnDoubleClicked += rotatePiece;
+    }
+
+    void OnDisable() {
+            EventManager.OnDoubleClicked -= rotatePiece;
+    }
+
+    public void rotatePiece() {
+        this.transform.Rotate(0.5 * Time.deltaTime, 0, 0 ( ));
+    }
     // Start is called before the first frame update
     void Start()
+
     {
+        // Debug.Log(this.name);
+        rb = this.gameObject.GetComponent<Rigidbody2D>();
         ChangeSuitRandom();   
     }
+
+    public void freezePiece() {
+        rb.bodyType = RigidbodyType2D.Static;
+    }
+
     void ChangeSuitRandom() {
         //Get a random number
         int rand = UnityEngine.Random.Range(1, 27);
@@ -64,90 +114,122 @@ public class Piece : MonoBehaviour
                 break;
             case Suits.A:
                 image.sprite = A;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("A");
                 break;
             case Suits.B:
                 image.sprite = B;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("B");
                 break;
             case Suits.C:
                 image.sprite = C;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("C");
                 break;
             case Suits.D:
                 image.sprite = D;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("D");
                 break;
             case Suits.E:
                 image.sprite = E;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("E");
                 break;
             case Suits.F:
                 image.sprite = F;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("F");
                 break;
             case Suits.G:
                 image.sprite = G;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("H");
                 break;
             case Suits.H:
                 image.sprite = H;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("H");
                 break;
             case Suits.I:
                 image.sprite = I;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("I");
                 break;
             case Suits.J:
                 image.sprite = J;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("J");
                 break;
             case Suits.K:
                 image.sprite = K;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("K");
                 break;
             case Suits.L:
                 image.sprite = L;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("L");
                 break;
             case Suits.M:
                 image.sprite = M;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("M");
                 break;
             case Suits.N:
                 image.sprite = N;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("N");
                 break;
             case Suits.O:
                 image.sprite = O;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("O");
                 break;
             case Suits.P:
                 image.sprite = P;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("P");
                 break;
             case Suits.Q:
                 image.sprite = Q;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("Q");
                 break;
             case Suits.R:
                 image.sprite = R;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("R");
                 break;
             case Suits.S:
                 image.sprite = S;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("S");
                 break;
             case Suits.T:
                 image.sprite = T;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("T");
                 break;
             case Suits.U:
                 image.sprite = U;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("U");
                 break;
             case Suits.V:
                 image.sprite = V;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("V");
                 break;
             case Suits.W:
                 image.sprite = W;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("W");
                 break;
             case Suits.X:
                 image.sprite = X;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("X");
                 break;
             case Suits.Y:
                 image.sprite = Y;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("Y");
                 break;
             case Suits.Z:
                 image.sprite = Z;
+                this.transform.parent.gameObject.GetComponent<NodeData>().setLetterValue("Z");
                 break;
             default:
                 break;
 
         }
-    } 
+    }
     // Update is called once per frame
     void Update()
     {
-        
+        //  if(selectedNode == true) {
+            // EventManager.OnDoubleClicked += rotatePiece;
+            // // rotatePiece();
+            // EventManager.OnDoubleClicked -= rotatePiece;
+            // this.transform.parent.parent.GetComponent<GameController>().Unselect();
+            // selectedNode = false;
+        // }
     }
 }
