@@ -10,15 +10,6 @@ public class Piece : MonoBehaviour
     // public enum Suits {none, green, yellow, red}
     public Suits Suit = Suits.blank;
     public Rigidbody2D rb;
-    // public bool selectedNode = false;
-
-    // public void selectPiece() {
-    //     this.selectedNode = true;
-    // }
-
-    // public void deselectPiece() {
-    //     this.selectedNode = false;
-    // }
 
     void OnMouseOver()
     {
@@ -26,9 +17,6 @@ public class Piece : MonoBehaviour
         //If your mouse hovers over the GameObject with the script attached, output this message
         this.GetComponent<Image>().color = Color.magenta;
 
-        // if(this.GetComponent<Image>().color == Color.white) {
-        //     this.GetComponent<Image>().color = Color.magenta;
-        // }
     }
 
     void OnMouseExit()
@@ -36,27 +24,12 @@ public class Piece : MonoBehaviour
             // Reset the color of the GameObject back to normal
             this.GetComponent<Image>().color = Color.white;
 
-            // if(this.GetComponent<Image>().color != Color.green) {
-            //     this.GetComponent<Image>().color = Color.white;
-            // }
     }
 
-    // void OnEnable() {
-    //         EventManager.OnDoubleClicked += rotatePiece;
-    // }
-    //
-    // void OnDisable() {
-    //         EventManager.OnDoubleClicked -= rotatePiece;
-    // }
-
-    // public void rotatePiece() {
-    //     this.transform.Rotate(0.5 * Time.deltaTime, 0, 0 ( ));
-    // }
     // Start is called before the first frame update
     void Start()
 
     {
-        // Debug.Log(this.name);
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         ChangeSuitRandom();
     }
@@ -69,7 +42,6 @@ public class Piece : MonoBehaviour
         //Get a random number
         int rand = UnityEngine.Random.Range(1, 27);
 
-        // Get a random suit
         // var suits = Enum.GetValues(typeof(Suits));
         var suits = Enum.GetValues(typeof(Suits));
         Suits randSuit = (Suits)suits.GetValue(rand);
@@ -222,14 +194,8 @@ public class Piece : MonoBehaviour
         }
     }
     // Update is called once per frame
-    void Update()
-    {
-        //  if(selectedNode == true) {
-            // EventManager.OnDoubleClicked += rotatePiece;
-            // // rotatePiece();
-            // EventManager.OnDoubleClicked -= rotatePiece;
-            // this.transform.parent.parent.GetComponent<GameController>().Unselect();
-            // selectedNode = false;
-        // }
-    }
+    //void Update()
+    //{
+
+    //}
 }
