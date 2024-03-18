@@ -13,8 +13,9 @@ public class GameController : MonoBehaviour
     public List<string> eachLine = new List<string>();
     public GameObject[,] grid;
     public Text ScoreText;
-
+    public Text LastWordText;
     public TextAsset wordFile;
+
     private Vector2 nodeSize;
     private RectTransform _rectTransform;
     private string wordsAsString;
@@ -23,8 +24,8 @@ public class GameController : MonoBehaviour
 
     float iResX = 0;
     float iResY = 0;
-    int rows = 7;
-    int cols = 4;
+    int rows = 9;
+    int cols = 18;
     int nodeHeight = 0;
     int nodeWidth = 0;
     int kWords;
@@ -34,7 +35,6 @@ public class GameController : MonoBehaviour
     {
         wordsAsString = wordFile.text;
         eachLine.AddRange(wordsAsString.ToUpper().ToString().Trim().Split("\n"[0]) );
-
         _rectTransform = GetComponent<RectTransform>();
         playerScore = 0;
 
@@ -57,7 +57,7 @@ public class GameController : MonoBehaviour
                 node.GetComponent<RectTransform>().anchoredPosition = pos;
                 node.transform.localScale = Vector3.one;
                 node.GetComponent<NodeData>().setGridValues(i, j);
-                grid[i, j] = node;
+                grid[i , j] = node;
 
                 if(iResX == 0 && iResY == 0) {
                     iResX = this.transform.GetComponent<RectTransform>().rect.width / nodeWidth;
@@ -77,33 +77,41 @@ public class GameController : MonoBehaviour
 
     }
 
-    public void Swap(GameObject gameObject1, GameObject gameObject2) {
+    public void Swap(GameObject gameObject1, GameObject gameObject2)
+    {
+        Debug.Log(validPosition(gameObject1, gameObject2).ToString());
+        Debug.Log(nodeWidth - 5);
 
-        Vector3 tempPosition = gameObject1.transform.position;
+        if (validPosition(gameObject1, gameObject2) <= (nodeWidth + 5) && validPosition(gameObject1, gameObject2) > 0)
+        {
 
-        // Swap Obj1 Position
-        gameObject1.transform.position = gameObject2.transform.position;
-        // Swap Obj Position
-        gameObject2.transform.position = tempPosition;
+            Vector3 tempPosition = gameObject1.transform.position;
 
-        int gobj1X = (int)gameObject1.GetComponent<NodeData>().getGridPos()[0];
-        int gobj1Y = (int)gameObject1.GetComponent<NodeData>().getGridPos()[1];
+            // Swap Obj1 Position
+            gameObject1.transform.position = gameObject2.transform.position;
+            // Swap Obj Position
+            gameObject2.transform.position = tempPosition;
 
-
-        int gobj2X = (int)gameObject2.GetComponent<NodeData>().getGridPos()[0];
-        int gobj2Y = (int)gameObject2.GetComponent<NodeData>().getGridPos()[1];
+            int gobj1X = (int)gameObject1.GetComponent<NodeData>().getGridPos()[0];
+            int gobj1Y = (int)gameObject1.GetComponent<NodeData>().getGridPos()[1];
 
 
-        grid[gobj2X, gobj2Y] = gameObject1;
-        grid[gobj1X, gobj1Y] = gameObject2;
+            int gobj2X = (int)gameObject2.GetComponent<NodeData>().getGridPos()[0];
+            int gobj2Y = (int)gameObject2.GetComponent<NodeData>().getGridPos()[1];
 
-        gameObject1.GetComponent<NodeData>().setGridValues(gobj2X, gobj2Y);
-        gameObject2.GetComponent<NodeData>().setGridValues(gobj1X, gobj1Y);
 
+            grid[gobj2X, gobj2Y] = gameObject1;
+            grid[gobj1X, gobj1Y] = gameObject2;
+
+            gameObject1.GetComponent<NodeData>().setGridValues(gobj2X, gobj2Y);
+            gameObject2.GetComponent<NodeData>().setGridValues(gobj1X, gobj1Y);
+
+        }
     }
 
-    public bool validPosition(GameObject letter1, GameObject letter2) {
-        return Vector2.Distance(letter1.transform.position, letter2.transform.position) <= 1 && Vector2.Distance(letter1.transform.position, letter2.transform.position) != 0;
+    public float validPosition(GameObject letter1, GameObject letter2) {
+        Debug.Log(Vector2.Distance(letter1.transform.position, letter2.transform.position).ToString());
+        return Vector2.Distance(letter1.transform.position, letter2.transform.position);
     }
 
     public bool validWord(string formedWord)
@@ -130,6 +138,8 @@ public class GameController : MonoBehaviour
                     matches.Add(grid[row, col+1].GetComponent<NodeData>().getGridPos());
                     matches.Add(grid[row, col+2].GetComponent<NodeData>().getGridPos());
                     lastWordFound = wordToCheck;
+                    updateLastWordText();
+
                 }
             }
         }
@@ -146,6 +156,7 @@ public class GameController : MonoBehaviour
                     matches.Add(grid[row + 1, col].GetComponent<NodeData>().getGridPos());
                     matches.Add(grid[row + 2, col].GetComponent<NodeData>().getGridPos());
                     lastWordFound = wordToCheck;
+                    updateLastWordText();
                     }
                 }
             }
@@ -183,6 +194,11 @@ public class GameController : MonoBehaviour
 
     void updateScoreText() {
         ScoreText.text = getCurrentScore().ToString();
+    }
+
+    void updateLastWordText()
+    {
+        LastWordText.text = "Last Word Found: " + lastWordFound.ToString();
     }
 
     // Update is called once per frame
